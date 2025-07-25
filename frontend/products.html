@@ -3,19 +3,88 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Products</title>
+  <title>Products - Grocery WebApp</title>
   <link rel="stylesheet" href="css/style.css" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      background: linear-gradient(to right, #f5fff5, #e6f7ff);
+      font-family: 'Segoe UI', sans-serif;
+      animation: fadeInBody 0.7s ease-in-out;
+    }
+
+    @keyframes fadeInBody {
+      from { opacity: 0; transform: scale(0.98); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .navbar-brand {
+      font-weight: bold;
+      font-size: 1.6rem;
+      color: #00ffaa !important;
+      text-shadow: 1px 1px 8px #00ffaa;
+    }
+
+    h2 {
+      text-shadow: 1px 1px 10px #00bfff;
+      color: #0072ff;
+    }
+
+    #search-input {
+      border-radius: 25px;
+      padding: 12px 20px;
+      font-size: 1rem;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      transition: 0.3s ease;
+    }
+
+    #search-input:focus {
+      outline: none;
+      box-shadow: 0 0 15px #00d9ff;
+      border-color: #00c3ff;
+    }
+
+    .card {
+      border: none;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 20px rgba(0, 170, 255, 0.2);
+    }
+
+    .card-title {
+      font-weight: 600;
+    }
+
+    .btn-primary {
+      background: linear-gradient(to right, #00c6ff, #0072ff);
+      border: none;
+      transition: transform 0.2s ease, box-shadow 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px #00eaff;
+    }
+
+    footer {
+      background: #111;
+      color: #aaa;
+    }
+  </style>
 </head>
 <body>
 
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-      <a class="navbar-brand" href="index.html">Grocery WebApp</a>
+      <a class="navbar-brand" href="index.html">🛒 Grocery WebApp</a>
       <div>
-        <a class="btn btn-outline-light me-2" href="cart.html">Cart</a>
-        <a class="btn btn-outline-light" href="login.html">Login</a>
+        <a class="btn btn-outline-light me-2" href="cart.html">🛍 Cart</a>
+        <a class="btn btn-outline-light" href="login.html">🔐 Login</a>
       </div>
     </div>
   </nav>
@@ -25,7 +94,7 @@
     <h2 class="text-center mb-4">🛒 Available Products</h2>
 
     <!-- Search Input -->
-    <input type="text" id="search-input" class="form-control mb-4" placeholder="Search products...">
+    <input type="text" id="search-input" class="form-control mb-4" placeholder="🔎 Search products...">
 
     <!-- Product Grid -->
     <div id="product-container" class="row g-4">
@@ -34,7 +103,7 @@
   </div>
 
   <!-- Footer -->
-  <footer class="bg-dark text-light text-center py-3 mt-5">
+  <footer class="text-center py-3 mt-5">
     <p class="mb-0">&copy; 2025 Grocery WebApp</p>
   </footer>
 
@@ -42,7 +111,6 @@
     const container = document.getElementById("product-container");
     const searchInput = document.getElementById("search-input");
 
-    // Default fallback products
     const fallbackProducts = [
       { name: "Tomatoes", price: 25, image: "https://via.placeholder.com/200?text=Tomatoes" },
       { name: "Potatoes", price: 20, image: "https://via.placeholder.com/200?text=Potatoes" },
@@ -51,10 +119,8 @@
       { name: "Bananas", price: 50, image: "https://via.placeholder.com/200?text=Bananas" }
     ];
 
-    // Load from localStorage or fallback
     let products = JSON.parse(localStorage.getItem("adminProducts")) || fallbackProducts;
 
-    // Render product cards
     function renderProducts(list) {
       container.innerHTML = "";
       if (list.length === 0) {
@@ -80,7 +146,6 @@
       });
     }
 
-    // Add item to cart
     function addToCart(name, price, image) {
       let cart = JSON.parse(localStorage.getItem("cartItems")) || [];
       const item = cart.find(p => p.name === name);
@@ -95,18 +160,14 @@
       alert(`${name} added to cart!`);
     }
 
-    // Filter products with search
     searchInput.addEventListener("input", () => {
       const query = searchInput.value.toLowerCase();
       const filtered = products.filter(p => p.name.toLowerCase().includes(query));
       renderProducts(filtered);
     });
 
-    // Initial render
     renderProducts(products);
   </script>
 
 </body>
 </html>
-
-
